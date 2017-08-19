@@ -68,14 +68,8 @@ function install_doevent(doevent::Function, sec::Real)
 end
 
 # work around API change in Julia 0.3 (issue #76)
-if VERSION >= v"0.3-"
-    macro doevent(body)
-        Expr(:function, :($(esc(:doevent))(async)), body)
-    end
-else
-    macro doevent(body)
-        Expr(:function, :($(esc(:doevent))(async, status::Int32)), body)
-    end
+macro doevent(body)
+    Expr(:function, :($(esc(:doevent))(async)), body)
 end
 
 # GTK (either GTK2 or GTK3, depending on gtkmodule):
